@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cece's Vibe Zone</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+    }
+
+    img {
+      border: 4px solid #ff69b4;
+      border-radius: 12px;
+      width: 300px;
+      box-shadow: 0 0 20px #ff69b4;
+      transition: all 0.3s ease;
+    }
+
+    img:hover {
+      box-shadow: 0 0 40px #ff1493;
+    }
+
+    .quote-box {
+      border: 2px dashed #fff;
+      padding: 20px;
+      margin: 20px auto;
+      width: 70%;
+      font-style: italic;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Add styles for buttons */
+    button {
+      margin: 10px;
+      padding: 10px 22px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+
+<body onload="playAudio()">
+  <h1>💖 Cece’s Pink Venom Vibe Zone 💖</h1>
+  <p>Welcome to the page where Jennie energy and Lisa lifestyle unite 💅🏽🔥</p>
+
+  <hr>
+
+  <h2>📸 Aesthetic of the Day</h2>
+  <img src="jennielisa.jpeg" alt="Blackpink">
+
+  <hr>
+
+  <p style="font-style: italic; color: pink;">✨ Tap anywhere to activate the Lisa x Jennie vibe ✨</p>
+
+  <audio id="introAudio">
+    <source src="like jennie x rockstar.mp3" type="audio/mpeg">
+  </audio>
+
+  <h2>🎵 Current Audio Obsession</h2>
+  <audio id="secondaryAudio" controls>
+    <source src="like jennie x rockstar.mp3" type="audio/mpeg">
+  </audio>
+
+  <hr>
+
+  <h2>🔗 Links I Live By</h2>
+  <ul>
+    <li><a href="https://www.youtube.com/watch?v=iHqYqemO4Zg" target="_blank">Like Jennie - YouTube</a></li>
+    <li><a href="https://www.instagram.com/jennierubyjane" target="_blank">Jennie’s Instagram</a></li>
+    <li><a href="https://www.instagram.com/lalalalisa_m" target="_blank">Lisa’s Instagram</a></li>
+  </ul>
+
+  <hr>
+
+  <h2>🖤 Top 3 Lisa Lifestyle Moves</h2>
+  <ol>
+    <li>Dance like everyone’s watching AND still slay</li>
+    <li>Style with fearless energy</li>
+    <li>Stay unbothered with sunglasses at night 😎</li>
+  </ol>
+
+  <hr>
+
+  <h2>📝 Jennie Quotes of the Day</h2>
+  <div class="quote-box">
+    "You can’t just pretend to be cool. It has to come from the inside." – Jennie 🖤
+  </div>
+  <div class="quote-box">
+    "I’m not a perfect person, but I’m always myself." – Jennie 💖
+  </div>
+  <div class="quote-box">
+    "You know me, I ain't afraid to show what I got." – Jennie 💅
+  </div>
+
+  <script>
+    function playAudio() {
+      const audio = document.getElementById("introAudio");
+
+      audio.play().catch(() => {
+        document.body.addEventListener("click", () => {
+          audio.play();
+        }, { once: true });
+      });
+    }
+
+    // Fade-in animation for main content
+    document.body.style.opacity = 0;
+    document.body.style.transition = 'opacity 1.2s';
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => { document.body.style.opacity = 1; }, 100);
+    });
+
+    // Responsive image
+    const img = document.querySelector('img');
+    if (img) {
+      img.style.maxWidth = '90vw';
+      img.style.width = '300px';
+      img.style.height = 'auto';
+    }
+
+    // Add a fun confetti button BELOW the main image
+    const confettiBtn = document.createElement('button');
+    confettiBtn.textContent = '🎉 Drop Confetti!';
+    confettiBtn.style = 'display:block; margin: 20px auto 0 auto; padding: 12px 28px; font-size: 1.2em; background: linear-gradient(90deg,#ff69b4,#ff1493); color: #fff; border:none; border-radius: 8px; cursor:pointer; box-shadow:0 0 10px #ff69b4;';
+    confettiBtn.onmouseenter = () => confettiBtn.style.boxShadow = '0 0 30px #ff1493';
+    confettiBtn.onmouseleave = () => confettiBtn.style.boxShadow = '0 0 10px #ff69b4';
+    confettiBtn.onclick = dropConfetti;
+    // Insert after the main image (as next sibling)
+    const imgElem = document.querySelector('img');
+    if (imgElem && imgElem.parentNode) {
+      if (imgElem.nextSibling) {
+        imgElem.parentNode.insertBefore(confettiBtn, imgElem.nextSibling);
+      } else {
+        imgElem.parentNode.appendChild(confettiBtn);
+      }
+    }
+
+    // Add play/pause toggle for intro audio
+    const audio = document.getElementById('introAudio');
+    const audioBtn = document.createElement('button');
+    audioBtn.textContent = '▶️ Play Intro Music';
+    audioBtn.style = 'margin: 10px; padding: 10px 22px; font-size: 1em; background: #222; color: #ff69b4; border:2px solid #ff69b4; border-radius: 8px; cursor:pointer;';
+    let isPlaying = false;
+    audioBtn.onclick = () => {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+    };
+    audio.addEventListener('play', () => {
+      isPlaying = true;
+      audioBtn.textContent = '⏸️ Pause Intro Music';
+    });
+    audio.addEventListener('pause', () => {
+      isPlaying = false;
+      audioBtn.textContent = '▶️ Play Intro Music';
+    });
+    // Insert after the intro audio element
+    const introAudioElem = document.getElementById('introAudio');
+    if (introAudioElem && introAudioElem.parentNode) {
+      introAudioElem.parentNode.insertBefore(audioBtn, introAudioElem.nextSibling);
+    }
+
+    // Prevent double confetti on tap (when audio is not yet played)
+    let confettiOnTap = true;
+    document.body.addEventListener('click', function confettiTapHandler(e) {
+      // Don't trigger if the click was on a button
+      if (e.target.tagName === 'BUTTON') return;
+      if (audio.paused && confettiOnTap) {
+        dropConfetti();
+        confettiOnTap = false;
+        setTimeout(() => { confettiOnTap = true; }, 1000);
+      }
+    });
+
+    document.getElementById("secondaryAudio").addEventListener("play", function () {
+      alert("✨ Playing: Like Jennie x Rockstar✨ Get ready to slay!");
+    });
+
+    document.getElementById("introAudio").addEventListener("play", function () {
+      dropConfetti();
+    });
+
+    // Enhanced confetti: random colors
+    function dropConfetti() {
+      for (let i = 0; i < 5; i++) {
+        confetti({
+          particleCount: 500,
+          angle: 60 + i * 15,
+          spread: 100,
+          origin: { y: 0.6 },
+colors: [
+  '#000000', // black
+  '#b2a4ff', // light purple
+  '#8a2be2', // purple
+  '#ff69b4', // hot pink
+  '#ff1493', // deep pink
+  '#c71585'  // purple-pink
+].sort(() => 0.5 - Math.random()).slice(0, 4)
+        });
+      }
+    }
+  </script>
+</body>
+</html>
