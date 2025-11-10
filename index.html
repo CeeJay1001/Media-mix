@@ -91,10 +91,12 @@
       max-height: 420px;            /* prevent extremely tall images */
     }
 
-    /* JennieLisa card: slightly taller aspect to show cover art correctly */
+    /* JennieLisa card: focused resizing for main subject */
     #jennielisa-card img {
-      aspect-ratio: 4 / 3;
-      max-height: 360px;
+      aspect-ratio: 1 / 1;
+      max-height: 320px;
+      object-fit: cover;
+      object-position: center top;
     }
 
     /* Override images with inline styles to avoid fixed heights breaking layout */
@@ -280,7 +282,7 @@
     // Confetti button below Jennie Lisa card
     const confettiBtn = document.createElement('button');
     confettiBtn.textContent = '🎉 Drop Confetti!';
-    confettiBtn.style = 'display:block; margin: 0 auto; padding: 12px 28px; font-size: 1.2em; background: linear-gradient(90deg,#ff69b4,#ff1493); color: #fff; border:none; border-radius: 8px; cursor:pointer;';
+    confettiBtn.style = 'display:block; margin: 0 auto; padding: 12px 28px; font-size: 1.2em; background: linear-gradient(90deg,#ff69b4,#ff1493); color: #fff; border:none; border-radius: 8px; cursor:p[...]'
     confettiBtn.onmouseenter = () => confettiBtn.style.boxShadow = '0 0 30px #ff1493';
     confettiBtn.onmouseleave = () => confettiBtn.style.boxShadow = '0 0 10px #ff69b4';
     confettiBtn.onclick = dropConfetti;
