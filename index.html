@@ -74,9 +74,12 @@
       box-shadow: 0 8px 32px #ff69b4aa;
       z-index: 2;
     }
+
+    /* Responsive image sizing: use aspect-ratio and max-height instead of fixed height */
     .media-card img {
       width: 100%;
-      height: 240px;
+      height: auto;                 /* let aspect-ratio control height */
+      aspect-ratio: 16 / 9;         /* consistent layout across cards */
       object-fit: cover;
       object-position: top center;
       border-bottom: 2px solid #ff69b4;
@@ -85,7 +88,21 @@
       background: #eee;
       margin-bottom: 0.7em;
       transition: box-shadow 0.18s;
+      max-height: 420px;            /* prevent extremely tall images */
     }
+
+    /* JennieLisa card: slightly taller aspect to show cover art correctly */
+    #jennielisa-card img {
+      aspect-ratio: 4 / 3;
+      max-height: 360px;
+    }
+
+    /* Override images with inline styles to avoid fixed heights breaking layout */
+    .media-card img[style] {
+      height: auto !important;
+      max-height: 360px !important;
+    }
+
     .media-card .tag {
       position: absolute;
       top: 12px;
@@ -142,8 +159,17 @@
     @media (max-width: 600px) {
       header h1 { font-size: 1.5rem; }
       .section-title { font-size: 1.1rem; }
-      .media-card img { height: 120px; }
+      .media-card img { aspect-ratio: 4 / 3; max-height: 220px; }
     }
+
+    /* Show audio controls for touch-only devices (hover not available) */
+    @media (hover: none) {
+      .media-card audio, .media-card iframe {
+        display: block;
+        width: 94%;
+      }
+    }
+
     /* Additional styles for K-Pop: Demon Hunters card */
     #kpop-bg-overlay {
       display: none;
@@ -216,7 +242,7 @@
         </div>
         <div class="media-card" onclick="window.open('https://www.imdb.com/title/tt11057302/','_blank')">
           <span class="tag">Movie</span>
-          <img src="madame_web.jpeg" alt="Madame Web" style="aspect-ratio:2/3;height:320px;" />
+          <img src="madame_web.jpeg" alt="Madame Web" style="aspect-ratio:2/3;" />
           <div class="media-title">Madame Web</div>
           <div class="media-meta">Superhero · 2024</div>
           <div class="media-quote">“Her web connects them all.”</div>
@@ -248,13 +274,13 @@
     Built with vibes and code by CJ 💻<br>
     <span style="font-style:italic; color:#fff9;">“Curating my soundtrack and cinema, one link at a time.”</span>
   </footer>
-  <div id="kpop-bg-overlay"></div>
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
     // Confetti button below Jennie Lisa card
     const confettiBtn = document.createElement('button');
     confettiBtn.textContent = '🎉 Drop Confetti!';
-    confettiBtn.style = 'display:block; margin: 0 auto; padding: 12px 28px; font-size: 1.2em; background: linear-gradient(90deg,#ff69b4,#ff1493); color: #fff; border:none; border-radius: 8px; cursor:pointer; box-shadow:0 0 10px #ff69b4;';
+    confettiBtn.style = 'display:block; margin: 0 auto; padding: 12px 28px; font-size: 1.2em; background: linear-gradient(90deg,#ff69b4,#ff1493); color: #fff; border:none; border-radius: 8px; cursor:pointer;';
     confettiBtn.onmouseenter = () => confettiBtn.style.boxShadow = '0 0 30px #ff1493';
     confettiBtn.onmouseleave = () => confettiBtn.style.boxShadow = '0 0 10px #ff69b4';
     confettiBtn.onclick = dropConfetti;
@@ -293,6 +319,21 @@
         kpopAudio.pause();
         kpopAudio.currentTime = 0;
         kpopBg.style.display = 'none';
+      });
+
+      // For touch/keyboard users: toggle audio when the card is tapped/clicked (only for the kpop card)
+      kpopCard.addEventListener('click', (e) => {
+        // Prevent double-action when click triggers both open() from onclick attribute and toggle:
+        e.stopPropagation();
+        if (kpopAudio.paused) {
+          kpopAudio.currentTime = 0;
+          kpopAudio.play();
+          kpopBg.style.display = 'block';
+        } else {
+          kpopAudio.pause();
+          kpopAudio.currentTime = 0;
+          kpopBg.style.display = 'none';
+        }
       });
     }
   </script>
